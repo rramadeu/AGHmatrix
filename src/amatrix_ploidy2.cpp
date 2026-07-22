@@ -20,7 +20,7 @@ AGHmatrix is free software; you can redistribute it and/or modify
  */
 
 /*
- File: amatrix_kerr.cpp
+ File: amatrix_ploidy2.cpp
  Description: implement amatrix diploid method
 
  Written by Thiago de Paula Oliveira, 2025
