@@ -6,8 +6,8 @@
 # Contains: Gmatrix slater_par check_Gmatrix_data			
 # 									
 # Written by Rodrigo Rampazo Amadeu 			
-# Contributors: Marcio Resende Jr, Leticia AC Lara, Ivone Oliveira, Luis Felipe V Ferrao
-# Thiago Oliveira
+# Contributors: Marcio Resende Jr, Leticia AC Lara, Ivone Oliveira,
+# Luis Felipe V Ferrao, Thiago Oliveira
 #
 # First version: Feb-2014 					
 # Last update: 21-Jul-2026 						
