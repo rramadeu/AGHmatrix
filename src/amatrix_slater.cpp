@@ -25,7 +25,7 @@ AGHmatrix is free software; you can redistribute it and/or modify
 
  Written by Thiago de Paula Oliveira, 2025
  */
-
+// Thiago de Paula Oliveira
 #include <Rcpp.h>
 using namespace Rcpp;
 
