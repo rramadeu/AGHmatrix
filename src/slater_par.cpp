@@ -20,8 +20,8 @@ AGHmatrix is free software; you can redistribute it and/or modify
  */
 
 /*
- File: amatrix_kerr.cpp
- Description: implement slare par method
+ File: amatrix_slater.cpp
+ Description: implement slater par method
 
  Written by Thiago de Paula Oliveira, 2025
  */
