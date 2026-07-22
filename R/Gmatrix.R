@@ -327,7 +327,11 @@ Gmatrix <- function(SNPmatrix = NULL,
   if (!is.null(ids)) dimnames(Gmatrix) <- list(ids, ids)
   
   cat("Completed! Time =", round(proc.time()[3] - Time[3], 2), " seconds \n")
-
+  
+  attr(Gmatrix, "method") <- method
+  attr(Gmatrix, "ploidy") <- ploidy
+  attr(Gmatrix, "nmarkers") <- ncol(SNPmatrix)
+  
   return(Gmatrix)
 }
 
