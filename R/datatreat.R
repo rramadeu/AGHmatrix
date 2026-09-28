@@ -77,6 +77,54 @@ asciitonumber <- function(pedigree.data, unk = 0) {
   ascii_to_number(pedigree.data, as.character(unk))
 }
 
+sortped <- function(data = NULL, loop.in = 1000, loop.between = 100, print = FALSE) {
+  if (is.null(data))
+    stop("Please define the variable data")
+
+  stop.loop.1 <- stop.loop.2 <- FALSE
+
+  for (j in 1:loop.between) {
+    if (print) cat(paste("looping between...", j, "\n"))
+
+    for (i in 1:loop.in) {
+      if (print) cat(paste("looping in first parent...", i, "\n"))
+      ind <- data[, 1]
+      dire <- data[, 3]
+      index <- 1:length(ind)
+      compare <- match(dire, ind)
+      compare[which(is.na(compare))] <- 0
+      loop <- which(compare > index)
+      newindex <- index
+      newindex[loop[1]] <- compare[loop[1]]
+      newindex[compare[loop[1]]] <- loop[1]
+      data <- data[newindex, ]
+      if (print) print(length(loop))
+      if (length(loop) == 0 && i == 1) stop.loop.1 <- TRUE
+      if (length(loop) == 0) break
+    }
+
+    for (i in 1:loop.in) {
+      if (print) cat(paste("looping in second parent...", i, "\n"))
+      ind <- data[, 1]
+      sire <- data[, 2]
+      index <- 1:length(ind)
+      compare <- match(sire, ind)
+      compare[which(is.na(compare))] <- 0
+      loop <- which(compare > index)
+      newindex <- index
+      newindex[loop[1]] <- compare[loop[1]]
+      newindex[compare[loop[1]]] <- loop[1]
+      data <- data[newindex, ]
+      if (print) print(length(loop))
+      if (length(loop) == 0 && i == 1) stop.loop.2 <- TRUE
+      if (length(loop) == 0) break
+    }
+
+    if (stop.loop.1 && stop.loop.2) break
+  }
+  return(data)
+}
+
 # This function verify which rows in a pedigree data has missing parental or conflictuos data
 verifyped <- function(pedigree,
                       unk=0

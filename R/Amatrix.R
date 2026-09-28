@@ -152,15 +152,29 @@ Amatrix <- function(data = NULL,
     if (verifyped(data)) stop("Please double-check your data and try again.")
   }
 
-  cat("Organizing data with fast method...\n")
+  cat("Organizing data...\n")
   data.after.treat <- try(datatreat(data = data, unk = 0, ...), silent = TRUE)
-  
-  if (inherits(data.after.treat, "try-error") ||
-      !is.list(data.after.treat) ||
-      is.null(data.after.treat$ind_data) ||
-      length(unique(data.after.treat$ind_data)) != nrow(data)) {
-    stop(paste("It wasn't possible to organize your data chronologically.",
-               "Check for conflicting pedigree entries, duplicate IDs, or circular references."))
+
+  fast.ok <- !inherits(data.after.treat, "try-error") &&
+    is.list(data.after.treat) &&
+    !is.null(data.after.treat$ind_data) &&
+    length(unique(data.after.treat$ind_data)) == nrow(data)
+
+  if (!fast.ok) {
+    cat("Fast method failed. Trying robust (naive) sort...\n")
+    data.sorted <- sortped(data)
+    data.after.treat <- try(datatreat(data = data.sorted, unk = 0, ...), silent = TRUE)
+
+    slow.ok <- !inherits(data.after.treat, "try-error") &&
+      is.list(data.after.treat) &&
+      !is.null(data.after.treat$ind_data) &&
+      length(unique(data.after.treat$ind_data)) == nrow(data)
+
+    if (!slow.ok) {
+      stop(paste("It wasn't possible to organize your data chronologically.",
+                 "Check for conflicting pedigree entries, duplicate IDs,",
+                 "or circular references."))
+    }
   }
   
   #-------------------------------------------------------------------------
