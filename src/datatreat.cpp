@@ -53,15 +53,26 @@ List datatreat_cpp(CharacterMatrix data, int n_max = 50, std::string unk = "0", 
     IntegerVector parent = (indicator % 2 == 0) ? sire : dire;
     std::string parent_ind = (indicator % 2 == 0) ? "sire" : "dire";
     
+    // Reset ind and right_pos each iteration (matches R: ind <- 1:n)
+    for (int j = 0; j < n; ++j) ind[j] = j;
     std::fill(right_pos.begin(), right_pos.end(), NA_INTEGER);
     std::vector<int> error;
-    
+
+    // Parent indices from ascii_to_number are 1-based (0 = unknown).
+    // In the original R code, ind is 1-based and the check is:
+    //   is.na(match(parent[j], ind[1:j])) && parent[j] != 0
+    // which is equivalent to: parent[j] > j (both 1-based) && parent[j] != 0.
+    // With 0-based j here, the equivalent is: p > (j + 1).
     for (int j = 0; j < n; ++j) {
       int p = parent[j];
-      if (!IntegerVector::is_na(p) && p > j) {
+      if (IntegerVector::is_na(p) || p == 0) continue;
+      if (p > (j + 1)) {
         error.push_back(j);
-      } else if (!IntegerVector::is_na(p)) {
-        right_pos[j] = std::find(ind.begin(), ind.end(), p) - ind.begin();
+        // Find where value (p - 1) resides in ind (convert p to 0-based)
+        auto it = std::find(ind.begin(), ind.end(), p - 1);
+        if (it != ind.end()) {
+          right_pos[j] = it - ind.begin();
+        }
       }
     }
     
@@ -111,13 +122,12 @@ List datatreat_cpp(CharacterMatrix data, int n_max = 50, std::string unk = "0", 
     }
     
     if (i == n_max) {
-      Rcout << "Your data was not chronologically organized with success.\n";
       if (save) {
         Rcpp::Function write_table("write.table");
         write_table(new_data, Named("file") = "orgped.txt", Named("quote") = false,
                     Named("row.names") = false, Named("col.names") = false);
       }
-      return pedigree;
+      stop("Sorting did not converge within the maximum number of iterations.");
     }
   }
   
