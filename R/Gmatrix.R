@@ -328,9 +328,9 @@ Gmatrix <- function(SNPmatrix = NULL,
   
   cat("Completed! Time =", round(proc.time()[3] - Time[3], 2), " seconds \n")
   
-  attr(Gmatrix, "method") <- method
-  attr(Gmatrix, "ploidy") <- ploidy
-  attr(Gmatrix, "nmarkers") <- ncol(SNPmatrix)
+#  attr(Gmatrix, "method") <- method #waiting for ASRgenomic reverse dependency
+#  attr(Gmatrix, "ploidy") <- ploidy #waiting for ASRgenomic reverse dependency
+#  attr(Gmatrix, "nmarkers") <- ncol(SNPmatrix) #waiting for ASRgenomic reverse dependency
   
   return(Gmatrix)
 }
