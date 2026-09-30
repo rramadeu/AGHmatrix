@@ -179,11 +179,11 @@ Hmatrix <- function(A=NULL,
     if (ASV) H <- get_ASV(H)
     
     # attributes
-    nm <- attr(Gorig, "nmarkers", exact = TRUE)
-    if (is.null(nm)) nm <- NA_integer_
-    attr(H, "method")   <- method
-    attr(H, "ploidy")   <- ploidy
-    attr(H, "nmarkers") <- nm
+    # nm <- attr(Gorig, "nmarkers", exact = TRUE)
+    # if (is.null(nm)) nm <- NA_integer_
+    # attr(H, "method")   <- method
+    # attr(H, "ploidy")   <- ploidy
+    # attr(H, "nmarkers") <- nm
     
     Time <- as.matrix(proc.time()-Time)
     cat("\n","Completed! Time =", Time[3]/60," minutes \n")
@@ -246,9 +246,9 @@ Hmatrix <- function(A=NULL,
     
     # attributes
     nm <- tryCatch(ncol(markers), error = function(e) NA_integer_)
-    attr(H, "method")   <- method
-    attr(H, "ploidy")   <- ploidy
-    attr(H, "nmarkers") <- nm
+    # attr(H, "method")   <- method
+    # attr(H, "ploidy")   <- ploidy
+    # attr(H, "nmarkers") <- nm
     
     Time <- as.matrix(proc.time() - Time)
     cat("\n","Completed! Time =", Time[3]/60," minutes \n")
