@@ -234,14 +234,14 @@ Amatrix <- function(data = NULL,
     A <- get_ASV(A)
   }
   
-  attr(A, "ploidy") <- ploidy
-  attr(A, "method") <- if (dominance) {
-    "dominance"
-  } else if (slater) {
-    "slater"
-  } else {
-    "default"
-  }
+#  attr(A, "ploidy") <- ploidy
+#  attr(A, "method") <- if (dominance) {
+#    "dominance"
+#  } else if (slater) {
+#    "slater"
+#  } else {
+#    "default"
+#  }
   
   elapsed <- difftime(Sys.time(), start_time, units = "mins")
   cat("Completed! Time =", round(elapsed, 2), "minutes\n")
